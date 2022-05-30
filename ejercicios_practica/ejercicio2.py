@@ -19,6 +19,42 @@ if __name__ == '__main__':
     # Ejercicio de consumo de datos por API
     url = "https://jsonplaceholder.typicode.com/todos"
 
+    extraccion = requests.get(url)
+    data = extraccion.json()
+    
+    #practicando filtrado
+    filtrado =[{"userId": i["userId"] , "completed": i["completed"]} for i in data]
+    #print(json.dumps(filtrado,indent=4))
+
+    userId_list = []
+    cant_complete_list = []
+    cantidad = 0
+
+    for i in data:
+        if i["completed"] == True:
+            userId = (i["userId"])
+            userId_list.append(userId)
+
+    for i in userId_list:
+        cantidad = userId_list.count(i)
+        cant_complete_list.append(cantidad)
+
+            
+    #print(userId_list)
+    #print(cant_complete_list)
+
+    fig = plt.figure()
+    fig.suptitle('Títulos completados por usuario',fontsize = 15)
+    ax = fig.add_subplot()
+    ax.bar(userId_list, cant_complete_list, color = 'red')
+    ax.set_xlabel('userId')
+    ax.set_ylabel('Cantidad')
+    ax.set_facecolor('black')
+    ax.grid(ls='dashed')
+    plt.show()
+
+
+
     # El primer paso es que copien esa URL en su explorador web
     # y analicen los datos en general:
     # 1) Observando la URL se puede ver que en total hay 200 entradas,
@@ -45,5 +81,6 @@ if __name__ == '__main__':
     # para imprimir cuantos títulos completó cada usuario
     # y verifique si los primeros usuarios (mirando la página a ojo)
     # los datos recolectados son correctos.
+
 
     print("terminamos")
